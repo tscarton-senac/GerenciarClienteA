@@ -22,6 +22,24 @@ import java.util.logging.Logger;
  */
 public class ClienteDAO {
     
+    public static boolean cadastrar(Cliente cliente) {
+        boolean ok = true;
+        String query = "insert into cliente (nome, email, cpf) values (?,?,?)";
+        Connection con;
+        try {
+            con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, cliente.getNome());
+            ps.setString(2, cliente.getEmail());
+            ps.setString(3, cliente.getCpf());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;
+    }
+    
    public static List<Cliente> getClientes() {
         List<Cliente> clientes = new ArrayList<>();
         String query = "select * from cliente";
