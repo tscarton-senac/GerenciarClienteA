@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
+    <body class="container">
         <c:import url="header.jsp"/>
         <h1>Menu</h1>
         <br/>

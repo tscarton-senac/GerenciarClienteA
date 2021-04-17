@@ -59,9 +59,61 @@ public class ClienteDAO {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return clientes;
-        
-        
-        
     }
+   
+   public static Cliente getCliente(String cpf) {
+        Cliente cliente = null;
+        String query = "select * from cliente where cpf=?";
+        Connection con;
+        try {
+            con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, cpf);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                cliente = new Cliente(nome, email, cpf);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cliente;
+    }
+   
+   public static boolean deletar(String cpf) {
+        boolean ok = true;
+        String query = "delete from cliente_bkp where cpf=?";
+        Connection con;
+        try {
+            con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, cpf);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;
+    }
+   
+   public static boolean atualizar(Cliente cliente) {
+        boolean ok = true;
+        String query = "update cliente set nome=?,email=? where cpf=?";
+        Connection con;
+        try {
+            con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, cliente.getNome());
+            ps.setString(2, cliente.getEmail());
+            ps.setString(3, cliente.getCpf());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        }
+        return ok;
+    }
+    
     
 }
