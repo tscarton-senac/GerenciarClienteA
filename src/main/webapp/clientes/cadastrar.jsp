@@ -20,6 +20,8 @@
                 <input type="text" name="email" required="true" class="form-control" required/><br/><br/>
                 <label class="form-label">CPF</label><br/>
                 <input type="text" name="cpf" required="true" class="form-control" required/><br/><br/>
+                <label>Data</label><br/>
+                <input type="date" name="data" required="true" /><br/><br/>
 
                 <button type="submit" class="btn btn-primary">Cadastrar</button>
             </form>
@@ -32,7 +34,8 @@
                 <input type="text" name="email" required="true" value="${cliente.email}"/><br/><br/>
                 <label>CPF</label><br/>
                 <input type="text" name="cpf" required="true" value="${cliente.cpf}" readonly="true"/><br/><br/>
-
+                
+               
                 <button type="submit">Atualizar</button>
             </form>
             

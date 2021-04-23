@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,9 +23,9 @@ import java.util.logging.Logger;
  */
 public class ClienteDAO {
     
-    public static boolean cadastrar(Cliente cliente) {
+    public static boolean cadastrar(Cliente cliente, Date dataNascimento) {
         boolean ok = true;
-        String query = "insert into cliente (nome, email, cpf) values (?,?,?)";
+        String query = "insert into cliente (nome, email, cpf, dataNascimento) values (?,?,?,?)";
         Connection con;
         try {
             con = Conexao.getConexao();
@@ -32,6 +33,7 @@ public class ClienteDAO {
             ps.setString(1, cliente.getNome());
             ps.setString(2, cliente.getEmail());
             ps.setString(3, cliente.getCpf());
+            ps.setDate(4, dataNascimento);
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,7 +54,9 @@ public class ClienteDAO {
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
                 String cpf = rs.getString("cpf");
+                Date dataNascimento = rs.getDate("dataNascimento");
                 Cliente cliente = new Cliente(nome, email, cpf);
+                cliente.setDataNascimento(dataNascimento);
                 clientes.add(cliente);
             }
         } catch (SQLException ex) {

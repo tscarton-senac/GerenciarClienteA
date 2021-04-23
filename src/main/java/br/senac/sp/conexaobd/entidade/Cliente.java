@@ -5,6 +5,7 @@
  */
 package br.senac.sp.conexaobd.entidade;
 
+import java.sql.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ public class Cliente {
     private String nome;
     private String email;
     private String cpf;
+    private Date dataNascimento;
     
     public Cliente(String nome, String email, String cpf) {
         this.nome = nome;

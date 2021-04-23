@@ -1,4 +1,5 @@
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -50,12 +51,14 @@
             <th>Nome</th>
             <th>Email</th>
             <th>CPF</th>
+            <th>DATA NASCIMENTO</th>
             
             <c:forEach items="${listaClientes}" var="cliente">
                 <tr>
                     <td>${cliente.nome}</td>
                     <td>${cliente.email}</td>
                     <td>${cliente.cpf}</td>
+                    <td><fmt:formatDate pattern="dd/MM/yyyy" value="${cliente.dataNascimento}" /></td>
                     <td><a href="AlterarClienteServlet?cpf=${cliente.cpf}">Alterar</a></td>
                     
                     <td><button type="button" class="btn btn-link" onclick="mostrarTelaConfirmacao(`${cliente.nome}`,`${cliente.cpf}`)">Excluir</button></td>
