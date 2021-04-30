@@ -12,30 +12,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Cliente {
+public class Produto {
     
     private Integer id;
     private String nome;
-    private String email;
-    private String cpf;
-    private Date dataNascimento;
+    private Double preco;
     
-    public Cliente(int id, String nome, String email, String cpf) {
+    public Produto(int id, String nome, Double preco) {
         this.nome = nome;
-        this.email = email;
-        this.cpf = cpf;
+        this.preco = preco;
         this.id = id;
     }
     
-    public boolean validarCPF() {
-        return true;
-    }
-
     @Override
     public String toString() {
-        return String.format("Nome: %s <br/> Email: %s <br/> CPF: %s", nome, email, cpf);
+        return String.format("{ \"id\": %d, \"nome\": \"%s\", \"preco\": %f }", id, nome, preco);
     }
-    
-    
     
 }

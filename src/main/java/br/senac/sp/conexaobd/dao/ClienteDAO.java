@@ -55,7 +55,8 @@ public class ClienteDAO {
                 String email = rs.getString("email");
                 String cpf = rs.getString("cpf");
                 Date dataNascimento = rs.getDate("dataNascimento");
-                Cliente cliente = new Cliente(nome, email, cpf);
+                Integer id = rs.getInt("id");
+                Cliente cliente = new Cliente(id, nome, email, cpf);
                 cliente.setDataNascimento(dataNascimento);
                 clientes.add(cliente);
             }
@@ -65,19 +66,20 @@ public class ClienteDAO {
         return clientes;
     }
    
-   public static Cliente getCliente(String cpf) {
+   public static Cliente getCliente(Integer id) {
         Cliente cliente = null;
-        String query = "select * from cliente where cpf=?";
+        String query = "select * from cliente where id=?";
         Connection con;
         try {
             con = Conexao.getConexao();
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, cpf);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
-                cliente = new Cliente(nome, email, cpf);
+                String cpf = rs.getString("cpf");
+                cliente = new Cliente(id, nome, email, cpf);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,14 +87,14 @@ public class ClienteDAO {
         return cliente;
     }
    
-   public static boolean deletar(String cpf) {
+   public static boolean deletar(Integer id) {
         boolean ok = true;
-        String query = "delete from cliente_bkp where cpf=?";
+        String query = "delete from cliente where id=?";
         Connection con;
         try {
             con = Conexao.getConexao();
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, cpf);
+            ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,7 +105,7 @@ public class ClienteDAO {
    
    public static boolean atualizar(Cliente cliente) {
         boolean ok = true;
-        String query = "update cliente set nome=?,email=? where cpf=?";
+        String query = "update cliente set nome=?,email=?,cpf=? where id=?";
         Connection con;
         try {
             con = Conexao.getConexao();
@@ -111,6 +113,7 @@ public class ClienteDAO {
             ps.setString(1, cliente.getNome());
             ps.setString(2, cliente.getEmail());
             ps.setString(3, cliente.getCpf());
+            ps.setInt(4, cliente.getId());
             ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);

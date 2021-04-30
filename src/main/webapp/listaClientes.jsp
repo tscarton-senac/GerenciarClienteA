@@ -9,10 +9,10 @@
         <title>Lista de Clientes</title>
         
         <script type="text/javascript">
-            function mostrarTelaConfirmacao(nome, cpf){
+            function mostrarTelaConfirmacao(nome, id){
                 console.log("nome ", nome);
                 $("#nomeCliente").html(nome);
-                $("#cpfCliente").val(cpf)
+                $("#idCliente").val(id)
                 
                 var modalConfirmacao = $("#confirmarExclusao");
                 modalConfirmacao.show();
@@ -23,9 +23,9 @@
             }
             
             function deletarCliente() {
-                var cpf = $("#cpfCliente").val();
+                var id = $("#idCliente").val();
                 fecharTelaConfirmacao();
-                  $.ajax( "ExcluirClienteServlet?cpf="  + cpf).done(function() {
+                  $.ajax( "ExcluirClienteServlet?id="  + id).done(function() {
                         //Sucesso
                         location.reload();
                       })
@@ -39,6 +39,27 @@
                       
             }
             
+            function carregarListaProdutos() {
+                 var filial = $("#nomeFilial").val();
+                 console.log(filial);
+                 $.ajax( "CarregarProdutos?nomeFilial="  + filial).done(function(produtos) {
+                        //Sucesso
+                       
+                        var data = JSON.parse(produtos);
+                       for (var index = 0; index <= data.length; index++) {
+                            console.log(data[index]);
+                          $('#produtosList').append('<option value="' + data[index].id + '">' + data[index].nome + ' - ' + + data[index].preco + '</option>');
+                       }
+                      })
+                      .fail(function() {
+                        console.log( "error" );
+                        $("#alerta").css("display", "block");
+                        setTimeout(function (){
+                            $("#alerta").css("display", "none");
+                        }, 1000);
+                      })
+            }
+            
         </script>
     </head>
     <body class="container">
@@ -47,7 +68,19 @@
         <div class="alert alert-danger" role="alert" id="alerta" style="display:none">
             Erro ao excluir cliente!
          </div>
+        
+        <select name="nomeFilial" id="nomeFilial" onchange="carregarListaProdutos()">
+            <option value="-">Selecione</option>
+            <option value="SP">SP</option>
+            <option value="RJ">RJ</option>
+            <option value="BH">BH</option>
+        </select>
+        <select id="produtosList" name="produtosList">
+            
+         </select>
+        
         <table class="table">
+            <th>ID</th>
             <th>Nome</th>
             <th>Email</th>
             <th>CPF</th>
@@ -55,13 +88,14 @@
             
             <c:forEach items="${listaClientes}" var="cliente">
                 <tr>
+                    <td>${cliente.id}</td>
                     <td>${cliente.nome}</td>
                     <td>${cliente.email}</td>
                     <td>${cliente.cpf}</td>
                     <td><fmt:formatDate pattern="dd/MM/yyyy" value="${cliente.dataNascimento}" /></td>
-                    <td><a href="AlterarClienteServlet?cpf=${cliente.cpf}">Alterar</a></td>
+                    <td><a href="AlterarClienteServlet?id=${cliente.id}">Alterar</a></td>
                     
-                    <td><button type="button" class="btn btn-link" onclick="mostrarTelaConfirmacao(`${cliente.nome}`,`${cliente.cpf}`)">Excluir</button></td>
+                    <td><button type="button" class="btn btn-link" onclick="mostrarTelaConfirmacao(`${cliente.nome}`,`${cliente.id}`)">Excluir</button></td>
                 </tr>
             </c:forEach>
             
@@ -76,7 +110,7 @@
                  </div>
                 <div class="modal-body">
                     <p>Confirmar a exclusão do cliente <label id="nomeCliente"></label>  ?</p>
-                    <input type="hidden" id="cpfCliente" />
+                    <input type="hidden" id="idCliente" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="fecharTelaConfirmacao()">Cancelar</button>

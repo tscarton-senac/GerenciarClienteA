@@ -20,20 +20,21 @@
                 <input type="text" name="email" required="true" class="form-control" required/><br/><br/>
                 <label class="form-label">CPF</label><br/>
                 <input type="text" name="cpf" required="true" class="form-control" required/><br/><br/>
-                <label>Data</label><br/>
-                <input type="date" name="data" required="true" /><br/><br/>
+                <label>Data de Nascimento</label><br/>
+                <input type="date" name="data" required="true" class="form-control" required/><br/><br/>
 
                 <button type="submit" class="btn btn-primary">Cadastrar</button>
             </form>
         </c:if>
         <c:if test="${not empty cliente}">
             <form action="AlterarClienteServlet" method="POST">
+                 <input type="text" name="id" hidden="true" value="${cliente.id}"/> 
                 <label>Nome</label><br/>
                 <input type="text" name="nome" required="true" value="${cliente.nome}"/> <br/><br/>
                 <label>Email</label><br/>
                 <input type="text" name="email" required="true" value="${cliente.email}"/><br/><br/>
                 <label>CPF</label><br/>
-                <input type="text" name="cpf" required="true" value="${cliente.cpf}" readonly="true"/><br/><br/>
+                <input type="text" name="cpf" required="true" value="${cliente.cpf}" /><br/><br/>
                 
                
                 <button type="submit">Atualizar</button>

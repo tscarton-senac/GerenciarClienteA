@@ -18,9 +18,9 @@ public class AlterarClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String cpf = request.getParameter("cpf");
+        Integer id = Integer.parseInt(request.getParameter("id"));
         
-        Cliente cliente = ClienteDAO.getCliente(cpf);
+        Cliente cliente = ClienteDAO.getCliente(id);
         request.setAttribute("cliente", cliente);
         
         request.getRequestDispatcher("/clientes/cadastrar.jsp").forward(request, response);
@@ -37,8 +37,9 @@ public class AlterarClienteServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String email = request.getParameter("email");
         String cpf = request.getParameter("cpf");
+        Integer id = Integer.parseInt(request.getParameter("id"));
         
-        Cliente cliente = new Cliente(nome, email, cpf);
+        Cliente cliente = new Cliente(id, nome, email, cpf);
         boolean ok = ClienteDAO.atualizar(cliente);
         Redirect.sendRedirect(ok, response);
     }

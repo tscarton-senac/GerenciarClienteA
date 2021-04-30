@@ -3,15 +3,11 @@ package br.senac.sp.conexaobd.servlet;
 import br.senac.sp.conexaobd.dao.ClienteDAO;
 import br.senac.sp.conexaobd.entidade.Cliente;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.DateFormatter;
 
 public class CadastrarClienteServlet extends HttpServlet {
 
@@ -27,7 +23,7 @@ public class CadastrarClienteServlet extends HttpServlet {
 
         Date date = Date.valueOf(dataForm);
         //PASSO 2 - INSERIR O CLIENTE NO BD
-        Cliente cliente = new Cliente(nome, email, cpf);
+        Cliente cliente = new Cliente(-1, nome, email, cpf);
         boolean ok = ClienteDAO.cadastrar(cliente, date);
 
         // PASSO 3 - REDIRECIONAR PARA TELA DE SUCESSO/ERRO
