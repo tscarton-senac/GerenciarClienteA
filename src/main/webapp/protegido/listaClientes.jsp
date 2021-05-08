@@ -9,6 +9,13 @@
         <title>Lista de Clientes</title>
         
         <script type="text/javascript">
+            
+            var filial = '${filial}';
+            
+            window.onload = function() {
+                   carregarListaProdutos(filial);
+            };
+            
             function mostrarTelaConfirmacao(nome, id){
                 console.log("nome ", nome);
                 $("#nomeCliente").html(nome);
@@ -39,9 +46,7 @@
                       
             }
             
-            function carregarListaProdutos() {
-                 var filial = $("#nomeFilial").val();
-                 console.log(filial);
+            function carregarListaProdutos(filial) {
                  $.ajax( "CarregarProdutos?nomeFilial="  + filial).done(function(produtos) {
                         //Sucesso
                        
@@ -63,21 +68,17 @@
         </script>
     </head>
     <body class="container">
-        <c:import url="header.jsp"/>
+        <c:import url="../header.jsp"/>
         <h1>Clientes:</h1>
         <div class="alert alert-danger" role="alert" id="alerta" style="display:none">
             Erro ao excluir cliente!
          </div>
         
-        <select name="nomeFilial" id="nomeFilial" onchange="carregarListaProdutos()">
-            <option value="-">Selecione</option>
-            <option value="SP">SP</option>
-            <option value="RJ">RJ</option>
-            <option value="BH">BH</option>
-        </select>
         <select id="produtosList" name="produtosList">
             
          </select>
+        
+        
         
         <table class="table">
             <th>ID</th>
@@ -121,6 +122,6 @@
           </div>
         
         
-        <c:import url="footer.jsp"/>
+        <c:import url="../footer.jsp"/>
     </body>
 </html>

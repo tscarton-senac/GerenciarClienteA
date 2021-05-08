@@ -10,10 +10,10 @@
         <title>Cadastrar Cliente</title>
     </head>
     <body class="container">
-        <c:import url="../header.jsp"/>
+        <c:import url="../../header.jsp"/>
         
         <c:if test="${empty cliente}">
-            <form action="CadastrarClienteServlet" method="POST">
+            <form action="${pageContext.request.contextPath}/CadastrarClienteServlet" method="POST">
                 <label class="form-label">Nome</label><br/>
                 <input type="text" name="nome" required="true" class="form-control" required/> <br/><br/>
                 <label class="form-label">Email</label><br/>
@@ -28,13 +28,13 @@
         </c:if>
         <c:if test="${not empty cliente}">
             <form action="AlterarClienteServlet" method="POST">
-                 <input type="text" name="id" hidden="true" value="${cliente.id}"/> 
+                 <input type="text" name="id" hidden="true" value="${cliente.id}"  class="form-control" required/> 
                 <label>Nome</label><br/>
-                <input type="text" name="nome" required="true" value="${cliente.nome}"/> <br/><br/>
+                <input type="text" name="nome" required="true" value="${cliente.nome}"  class="form-control" required/> <br/><br/>
                 <label>Email</label><br/>
-                <input type="text" name="email" required="true" value="${cliente.email}"/><br/><br/>
+                <input type="text" name="email" required="true" value="${cliente.email}"  class="form-control" required/><br/><br/>
                 <label>CPF</label><br/>
-                <input type="text" name="cpf" required="true" value="${cliente.cpf}" /><br/><br/>
+                <input type="text" name="cpf" required="true" value="${cliente.cpf}"  class="form-control" required/><br/><br/>
                 
                
                 <button type="submit">Atualizar</button>
@@ -46,6 +46,6 @@
         
         
         
-        <c:import url="../footer.jsp"/>
+        <c:import url="../../footer.jsp"/>
     </body>
 </html>

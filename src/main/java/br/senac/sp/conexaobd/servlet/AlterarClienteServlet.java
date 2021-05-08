@@ -6,10 +6,13 @@ import br.senac.sp.conexaobd.entidade.Cliente;
 import br.senac.sp.conexaobd.utils.Redirect;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 public class AlterarClienteServlet extends HttpServlet {
@@ -20,10 +23,21 @@ public class AlterarClienteServlet extends HttpServlet {
             throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
         
+        // Criando carrinho vazio
+        List<String> produtos2 = new ArrayList<>();
+        HttpSession sessao = request.getSession();
+        sessao.setAttribute("carrinho", produtos2);
+        
+        // Adicionou produto no carrinho
+         List<String> produtos = (List<String>) sessao.getAttribute("carrinho");
+         produtos.add("TV");
+         sessao.setAttribute("carrinho", produtos);
+        
+        
         Cliente cliente = ClienteDAO.getCliente(id);
         request.setAttribute("cliente", cliente);
         
-        request.getRequestDispatcher("/clientes/cadastrar.jsp").forward(request, response);
+        request.getRequestDispatcher("/protegido/clientes/cadastrar.jsp").forward(request, response);
         
         
         
