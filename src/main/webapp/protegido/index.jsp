@@ -16,6 +16,8 @@
         <br/>
         <a href="clientes/cadastrar.jsp">Cadastrar Cliente</a>
         <br/>
+        <a href="<c:url value="/RealizarVendaServlet"/>">Realizar Venda</a>
+        <br/>
         <c:if test="${sessionScope.usuario.isGerente()}">
              <a href="gerente/relatorio.jsp">Relatório do Gerente</a>
         </c:if>

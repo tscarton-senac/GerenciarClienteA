@@ -5,7 +5,6 @@
  */
 package br.senac.sp.conexaobd.entidade;
 
-import java.sql.Date;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +25,7 @@ public class Produto {
     
     @Override
     public String toString() {
-        return String.format("{ \"id\": %d, \"nome\": \"%s\", \"preco\": %f }", id, nome, preco);
+        return String.format("{'id': %d, 'nome': '%s', 'preco': %f }", id, nome, preco);
     }
     
 }
