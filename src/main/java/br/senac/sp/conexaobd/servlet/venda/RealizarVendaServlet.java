@@ -6,10 +6,13 @@
 package br.senac.sp.conexaobd.servlet.venda;
 
 import br.senac.sp.conexaobd.dao.ClienteDAO;
+import br.senac.sp.conexaobd.dao.VendaDAO;
 import br.senac.sp.conexaobd.entidade.Cliente;
 import br.senac.sp.conexaobd.entidade.Produto;
+import br.senac.sp.conexaobd.entidade.Venda;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -58,14 +61,23 @@ public class RealizarVendaServlet extends HttpServlet {
     
         String dados = request.getParameter("dados");
         JSONObject jsonDados = new JSONObject(dados);
+        List<Venda> vendas = new ArrayList<>();
         
         String cliente = jsonDados.getString("cliente");
-        System.out.println(cliente);
+        
         JSONArray produtos = jsonDados.getJSONArray("produtos");
         for (int i = 0; i < produtos.length(); i++) {
+            Venda venda = new Venda();
+            long millis = System.currentTimeMillis();
+            venda.setDataVenda(new Date(millis));
+            venda.setIdCliente(Integer.parseInt(cliente));
             JSONObject produto = produtos.getJSONObject(i);
-            System.out.println(produto);
+            venda.setIdProduto(produto.getInt("id"));
+            venda.setPreco(produto.getFloat("preco"));
+            venda.setQte(produto.getInt("qte"));
+            vendas.add(venda);
         }
+        VendaDAO.cadastrar(vendas);
         
     }
 

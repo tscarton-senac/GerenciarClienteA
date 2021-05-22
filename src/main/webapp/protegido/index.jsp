@@ -19,7 +19,7 @@
         <a href="<c:url value="/RealizarVendaServlet"/>">Realizar Venda</a>
         <br/>
         <c:if test="${sessionScope.usuario.isGerente()}">
-             <a href="gerente/relatorio.jsp">Relatório do Gerente</a>
+             <a href="<c:url value="/RelatorioServlet"/>">Relatório do Gerente</a>
         </c:if>
        
         

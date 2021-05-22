@@ -40,6 +40,10 @@
         <servlet-name>RealizarVendaServlet</servlet-name>
         <servlet-class>br.senac.sp.conexaobd.servlet.venda.RealizarVendaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RelatorioServlet</servlet-name>
+        <servlet-class>br.senac.sp.conexaobd.servlet.relatorio.RelatorioServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ClienteServlet</servlet-name>
         <url-pattern>/ClienteServlet</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>RealizarVendaServlet</servlet-name>
         <url-pattern>/RealizarVendaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RelatorioServlet</servlet-name>
+        <url-pattern>/RelatorioServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
